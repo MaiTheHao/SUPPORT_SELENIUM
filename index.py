@@ -26,7 +26,7 @@ print(f"**ID của thẻ input: {inputLabel.get_attribute('id')}")
 
 # Nhập kí tự vào thẻ
 print("**Nhập kí tự vào thẻ**")
-enter_text(inputLabel, "HỌC LẬP TRÌNH CÙNG F8")
+enter_text(inputLabel, "PYTHON là gì")
 time.sleep(1)
 
 # In ra nội dung của thẻ input
@@ -42,7 +42,7 @@ print("**Đã nhấn Enter**")
 
 # Tìm các trang web ở kết quả và chọn ngẫu nhiên 1
 print("\n**Tiến hành tìm các trang web ở kết quả và chọn ngẫu nhiên 1**")
-list_Web = get_element(browser, "ULSxyf", "CLASS_NAME", mode_multi=True)
+list_Web = get_element(browser, "ULSxyf", "CLASS_NAME", mode_multi=True)[:4]
 print(f"**Số lượng kết quả tìm kiếm: {len(list_Web)}")
 time.sleep(1)
 
