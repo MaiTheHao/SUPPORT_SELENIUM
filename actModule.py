@@ -26,13 +26,13 @@ def load_json_file(path, encoding = 'utf-8'):
     with open(path, 'r', encoding = encoding) as file:
         return jload(file)
 
-def create_webdriver(browser_name="edge", user_data_dir=None):
+def create_webdriver(browser_name="chrome", user_data_dir=None):
     browser_name = browser_name.lower()
     """
     Tạo trình duyệt web dựa trên trình duyệt được chỉ định và tùy chọn đặt thư mục dữ liệu người dùng.
 
     Tham số:
-        browser_name (str, tùy chọn): Tên trình duyệt web cần sử dụng. Mặc định là "edge".
+        browser_name (str, tùy chọn): Tên trình duyệt web cần sử dụng. Mặc định là "chrome".
         user_data_dir (str, tùy chọn): Đường dẫn đến thư mục dữ liệu người dùng cho trình duyệt. Mặc định là None.
 
     Trả về:
@@ -116,7 +116,7 @@ def enter_text(element, text):
     except Exception as e:
         print(f"ERR ENTER_TEXT {element}: {e}")
 
-def click(element, count = 1, delay = 0, err = None):
+def click(element, count = 1, delay = 0.1, err = None):
     """
     Nhấn đối tượng
     
