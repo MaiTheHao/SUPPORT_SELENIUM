@@ -4,13 +4,34 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-
+from os import system as ost
 from selenium.webdriver.common.keys import Keys
 import time, os, sys
 import random as ra
 from json import load as jload
 
-remove_space = lambda x: '.'.join(x.split(' '))
+remove_space = lambda x: '.'.join(x.split(' ')) # Xóa khoảng trống thay thế bằng '.'
+format_lower = lambda x: x.strip().lower()
+format_upper = lambda x: x.strip().upper()
+clearT = lambda: ost('clear') # Xóa hiển thị ở bảng điều khiển
+showLog = "terminal" # terminal; file; hidden;
+
+with open(r"Running/runningSTATUS.txt", "w", encoding="utf-8") as f:
+    f.write("<<<RUNNING PROCESS>>>\n")
+
+def actModule_Log(value:bool):
+    global showLog
+    showLog = value
+
+def log(text):
+    if showLog == "hidden":
+        pass
+    elif showLog == "terminal":
+        print(text)
+    
+    elif showLog == "file":
+        with open(r"Running/runningSTATUS.txt", "a", encoding="utf-8") as f:
+            f.write(text + "\n")
 
 def load_json_file(path, encoding = 'utf-8'):
     """
@@ -94,14 +115,14 @@ def get_element(driver, name, search_type="ID", delay=5, err=None, mode_multi=Fa
         element_func = EC.presence_of_all_elements_located if mode_multi else EC.presence_of_element_located
         element = WebDriverWait(driver, delay).until(element_func((locator, name)))
         
-        print(f"GOTTED: {name} - BY {search_type}")
+        log(f"GOTTED: {name} - BY {search_type}")
         return element
         
     except Exception as e:
-        print(f"ERR FIND_ELEMENT {name}: {e}" if err is None else err)
+        log(f"ERR FIND_ELEMENT {name}: {e}" if err is None else err)
         return None
 
-def enter_text(element, text):
+def enter_text(element, text, enter = True):
     """
     Nhập dãy kí tự vào đối tượng
     
@@ -111,10 +132,13 @@ def enter_text(element, text):
     """
     try:
         element.send_keys(text)
-        print(f"ENTERED: {text} -TO- {element}")
+        if enter:
+            element.send_keys(Keys.RETURN)
+            
+        log(f"ENTERED: {text} -TO- {element}")
         return True
     except Exception as e:
-        print(f"ERR ENTER_TEXT {element}: {e}")
+        log(f"ERR ENTER_TEXT {element}: {e}")
 
 def click(element, count = 1, delay = 0.1, err = None):
     """
@@ -132,11 +156,11 @@ def click(element, count = 1, delay = 0.1, err = None):
         for i in range(count):
             element.click()
             time.sleep(delay)
-        print(f"CLICKED: {element}")
+        log(f"CLICKED: {element}")
         return True
     
     except Exception as e:
-        print(f"ERR CLICK {element}: {e}" if err is None else err)
+        log(f"ERR CLICK {element}: {e}" if err is None else err)
 
 if __name__ != "__main__":
     print("LOAD MODULE:", __name__, "FINISHED!")
